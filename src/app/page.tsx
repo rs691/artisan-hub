@@ -1,115 +1,116 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import type { Product } from '@/types';
+"use client";
 
-// In a real app, you'd fetch this from Supabase
-const featuredProducts: Product[] = [
-  {
-    id: 1,
-    name: 'Walnut End-Grain Cutting Board',
-    description: 'A stunning and durable cutting board, perfect for any kitchen.',
-    price: 125.00,
-    image: 'https://placehold.co/600x400.png',
-    featured: true,
-  },
-  {
-    id: 2,
-    name: 'Cherry Wood Jewelry Box',
-    description: 'An elegant box with intricate dovetail joinery.',
-    price: 250.00,
-    image: 'https://placehold.co/600x400.png',
-    featured: true,
-  },
-  {
-    id: 3,
-    name: 'Oak Serving Tray',
-    description: 'Serve your guests in style with this rustic oak tray.',
-    price: 85.00,
-    image: 'https://placehold.co/600x400.png',
-    featured: true,
-  },
-];
+
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowRight, Brush, Lightbulb, Store } from 'lucide-react';
+import Link from 'next/link';
+
+// In a real app, you'd fetch this data from your backend
 
 export default function Home() {
   return (
-    <div className="flex flex-col">
-      <section className="relative w-full h-[60vh] md:h-[80vh] flex items-center justify-center text-center bg-cover bg-center" style={{backgroundImage: "url('https://placehold.co/1600x900.png')"}}>
-        <div data-ai-hint="woodworking workshop" className="absolute inset-0 bg-background/50 backdrop-blur-sm"></div>
-        <div className="relative z-10 container px-4 md:px-6">
-          <div className="max-w-3xl mx-auto">
-            <h1 className="text-4xl font-headline font-bold tracking-tighter sm:text-5xl md:text-6xl text-primary-foreground drop-shadow-md" style={{textShadow: '2px 2px 4px hsl(var(--primary))'}}>
-              Artisan Hub
-            </h1>
-            <p className="mt-4 text-lg md:text-xl text-primary-foreground/90 drop-shadow">
-              Discover the timeless beauty of handcrafted woodworking creations.
-            </p>
-            <div className="mt-8">
-              <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                <Link href="/products">Explore Our Collection</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-headline font-bold tracking-tighter sm:text-4xl">Featured Creations</h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Each piece is a testament to skill, patience, and the natural beauty of wood.
+    <main className="min-h-screen flex flex-col items-center">
+        <div className="flex-1 w-full flex flex-col gap-20 items-center">
+          <section className="w-full py-12 md:py-24 lg:py-32 bg-primary/30">
+            <div className="container mx-auto px-4 md:px-6 text-center">
+              <h1 className="text-4xl font-headline font-bold tracking-tight sm:text-5xl md:text-6xl text-accent">
+                Steffen&#39;s Sign and Design
+              </h1>
+              <p className="mt-6 max-w-2xl mx-auto text-lg text-foreground md:text-xl">
+                Discover unique, handcrafted signs and designs that bring your vision to life. Quality craftsmanship for every occasion.
               </p>
+              <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+                <Button size="lg" asChild>
+                  <Link href="/shop">Shop Our Other Collection <Store className="ml-2 h-5 w-5" /></Link>
+                </Button>
+                   <Button size="lg" asChild>
+                  <Link href={{
+                    pathname: "/products",
+                    query: { category: "collection" }
+                  }}>Shop Our Collection <Store className="ml-2 h-5 w-5" /></Link>
+                </Button>
+                <Button size="lg" variant="outline" asChild>
+                  <Link href="/gallery">View Past Projects <Brush className="ml-2 h-5 w-5" /></Link>
+                </Button>
+                <Link href="/dashboard" replace>
+      Dashboard
+    </Link>
+              </div>
             </div>
-          </div>
-          <div className="mx-auto grid grid-cols-1 gap-6 pt-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-            {featuredProducts.map((product, index) => (
-              <Card key={product.id} className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                <Link href={`/products#product-${product.id}`} className="block">
-                  <Image
-                    alt={product.name}
-                    className="object-cover w-full h-60"
-                    data-ai-hint={index === 0 ? "cutting board" : index === 1 ? "jewelry box" : "serving tray"}
-                    height="400"
-                    src={product.image}
-                    width="600"
-                  />
+          </section>
+
+          {/* Features Section */}
+          <section className="w-full py-12 md:py-20 lg:py-28">
+            <div className="container mx-auto px-4 md:px-6">
+              <h2 className="text-3xl font-headline font-semibold text-center mb-12 text-accent">
+                What We Offer
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <CardHeader>
-                    <CardTitle className="text-xl font-headline">{product.name}</CardTitle>
+                    <Brush className="h-10 w-10 text-accent mb-4" />
+                    <CardTitle className="font-headline">Custom Craftsmanship</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground">{product.description}</p>
-                    <p className="text-lg font-semibold mt-4 text-primary">${product.price.toFixed(2)}</p>
+                    <CardDescription>
+                      Each piece is meticulously handcrafted with attention to detail, ensuring a unique and high-quality product tailored to your specifications.
+                    </CardDescription>
                   </CardContent>
-                </Link>
-              </Card>
-            ))}
-          </div>
+                </Card>
+                <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <CardHeader>
+                    <Store className="h-10 w-10 text-accent mb-4" />
+                    <CardTitle className="font-headline">Unique Designs</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription>
+                      Explore a wide range of creative designs or work with us to bring your own custom ideas to life. Perfect for gifts, home decor, or business branding.
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+                <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <CardHeader>
+                    <Lightbulb className="h-10 w-10 text-accent mb-4" />
+                    <CardTitle className="font-headline">Personalized Service</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription>
+                      We pride ourselves on providing excellent customer service, working closely with you from concept to completion.
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </section>
+          {/* Showcase Snippet Section */}
+          <section className="w-full py-12 md:py-20 lg:py-28 bg-secondary/50">
+            <div className="container mx-auto px-4 md:px-6">
+              <h2 className="text-3xl font-headline font-semibold text-center mb-12 text-accent">
+                A Glimpse of Our Work
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  { src: "./public/images/woodTexture.png", alt: "Wooden Sign", dataAiHint: "wood sign" },
+                  { src: "./public/images/art_design.png", alt: "Custom Design", dataAiHint: "art design" },
+                  { src: "./public/images/craft_item.png", alt: "Handcrafted Item", dataAiHint: "craft item" },
+                  { src: "./public/images/personalized_gift.png", alt: "Personalized Gift", dataAiHint: "personalized gift" },
+                ].map((_item, index) => (
+                  <div key={index} className="overflow-hidden rounded-lg shadow-md aspect-video">
+                    {/* You can add an img tag here if needed */}
+                  </div>
+                ))}
+              </div>
+              <div className="text-center mt-12">
+                <Button size="lg" variant="outline" asChild>
+                  <Link href="/gallery">Explore Full Gallery <ArrowRight className="ml-2 h-5 w-5" /></Link>
+                </Button>
+              </div>
+            </div>
+          </section>
         </div>
-      </section>
-
-      <section className="bg-secondary/50 py-12 md:py-24">
-         <div className="container px-4 md:px-6 grid gap-10 md:grid-cols-2 items-center">
-            <div className="space-y-4">
-                <h2 className="text-3xl font-headline font-bold tracking-tighter sm:text-4xl">The Art of Woodworking</h2>
-                <p className="text-muted-foreground md:text-lg">
-                    We believe in the enduring quality of things made by hand. Our workshop is a place where traditional techniques meet contemporary design, resulting in pieces that are both functional and beautiful. We source our wood sustainably, respecting the material that is the heart of our craft.
-                </p>
-            </div>
-             <div>
-                <Image
-                    alt="Woodworking tools"
-                    className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full"
-                    data-ai-hint="woodworking tools"
-                    height="310"
-                    src="https://placehold.co/550x310.png"
-                    width="550"
-                />
-            </div>
-         </div>
-      </section>
-    </div>
+      </main>
+    
+  
   );
 }
